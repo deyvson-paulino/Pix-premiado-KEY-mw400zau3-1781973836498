@@ -1,4 +1,4 @@
-const CACHE_NAME = "pwa-cache-v1";
+const CACHE_NAME = "pwa-pix-premiado-cache-v1";
 
 const BASE = "https://deyvson-paulino.github.io/Pix-premiado-KEY-mw400zau3-1781973836498/";
 const urlsToCache = [
