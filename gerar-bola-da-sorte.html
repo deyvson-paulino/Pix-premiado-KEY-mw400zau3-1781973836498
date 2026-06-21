@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bolas da Sorte</title>
+
+<style>
+    .container{
+    max-width:1000px;
+    margin:auto;
+    padding:20px;
+}
+
+.bolas{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+}
+
+.bola{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:#28a745;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.card{
+    border:1px solid #ddd;
+    padding:15px;
+    margin-bottom:15px;
+    border-radius:5px;
+}
+
+button{
+    padding:10px;
+    margin:5px;
+}
+</style>
+
+
+</head>
+<body>
+
+<div class="container">
+
+    <h1>PAINEL DE SORTEIOS</h1>
+
+    <div id="painelAdmin">
+
+        <input
+        type="password"
+        id="senhaAdmin"
+        placeholder="Senha do Administrador">
+
+        <button onclick="loginAdmin()">
+            Entrar
+        </button>
+
+        <button
+        id="btnNovo"
+        onclick="criarNovoSorteio()"
+        style="display:none;">
+            Novo Sorteio
+        </button>
+
+        <button
+        id="btnEncerrar"
+        onclick="encerrarSorteio()"
+        style="display:none;">
+            Encerrar Sorteio
+        </button>
+
+    </div>
+    
+    <button
+id="btnLimpar"
+style="display:none;"
+onclick="limparHistorico()">
+Limpar Histórico
+</button>
+
+<button
+id="btnSalvarJS"
+style="display:none;"
+onclick="salvarDadosJS()">
+Salvar dados.js
+</button>
+
+    <hr>
+
+    <div id="sorteioAtual"></div>
+
+    <hr>
+
+    <h2>Histórico</h2>
+
+    <div id="historico"></div>
+
+</div>
+
+<script>
+
+const SENHA_ADMIN = "123456";
+const CHAVE = "sorteiosPixPremiado";
+
+
+function salvarDadosJS(){
+
+    const dados =
+    JSON.parse(
+        localStorage.getItem(
+            CHAVE
+        )
+    ) || [];
+
+    const conteudo =
+
+`const historicoSorteios = ${JSON.stringify(
+    dados,
+    null,
+    4
+)};`;
+
+    const blob =
+    new Blob(
+        [conteudo],
+        {
+            type:
+            "application/javascript"
+        }
+    );
+
+    const a =
+    document.createElement(
+        "a"
+    );
+
+    a.href =
+    URL.createObjectURL(
+        blob
+    );
+
+    a.download =
+    "dados.js";
+
+    a.click();
+}
+/* ==========================
+   LOGIN ADMIN
+========================== */
+
+function loginAdmin(){
+    document.getElementById(
+    "btnSalvarJS"
+).style.display =
+"inline-block";
+
+document.getElementById(
+    "btnLimpar"
+).style.display =
+"inline-block";
+
+    const senha =
+    document.getElementById(
+        "senhaAdmin"
+    ).value;
+
+    if(senha === SENHA_ADMIN){
+
+        document.getElementById(
+            "btnNovo"
+        ).style.display = "inline-block";
+
+        document.getElementById(
+            "btnEncerrar"
+        ).style.display = "inline-block";
+
+        const btnAlterar =
+        document.getElementById(
+            "btnAlterar"
+        );
+
+        if(btnAlterar){
+            btnAlterar.style.display =
+            "inline-block";
+        }
+
+        alert(
+            "Administrador conectado"
+        );
+
+    }else{
+
+        alert(
+            "Senha incorreta"
+        );
+
+    }
+}
+/* ==========================
+   Apagar sorteios: use esse
+========================== */
+
+/*function limparHistorico(){
+
+    const confirmar =
+    confirm(
+        "Deseja realmente apagar todo o histórico?"
+    );
+
+    if(!confirmar){
+        return;
+    }
+
+    localStorage.removeItem(
+        CHAVE
+    );
+
+    atualizarTela();
+
+    alert(
+        "Histórico apagado com sucesso."
+    );
+}
+*/
+/* ==========================
+   Apagar sequência dos sorteios:
+   use esse testes
+========================== */
+
+function limparHistorico(){
+
+    const confirmar =
+    confirm(
+        "Deseja apagar todo o histórico e reiniciar a numeração?"
+    );
+
+    if(!confirmar){
+        return;
+    }
+
+    localStorage.removeItem(
+        CHAVE
+    );
+
+    localStorage.removeItem(
+        "sequenciaSorteio"
+    );
+
+    document.getElementById(
+        "historico"
+    ).innerHTML = "";
+
+    document.getElementById(
+        "sorteioAtual"
+    ).innerHTML = "";
+
+    alert(
+        "Histórico removido."
+    );
+}
+
+/* ==========================
+   BOLAS
+========================== */
+
+function gerarBolas(){
+
+    const bola1 =
+    Math.floor(
+        Math.random() * 49
+    ) + 1;
+
+    const alvo =
+    150 - bola1;
+
+    const combinacoes = [];
+
+    for(
+        let a = 50;
+        a <= 100;
+        a++
+    ){
+
+        const b =
+        alvo - a;
+
+        if(
+            b >= 50 &&
+            b <= 100 &&
+            a <= b
+        ){
+
+            combinacoes.push([
+                a,
+                b
+            ]);
+
+        }
+
+    }
+
+    const sorteio =
+    combinacoes[
+        Math.floor(
+            Math.random() *
+            combinacoes.length
+        )
+    ];
+
+    return {
+
+        bola1: bola1,
+
+        bola2: sorteio[0],
+
+        bola3: sorteio[1]
+
+    };
+}
+
+/* ==========================
+   CÓDIGO DO SORTEIO
+========================== */
+
+function gerarCodigo(){
+
+    const hoje =
+    new Date();
+
+    const dia =
+    String(
+        hoje.getDate()
+    ).padStart(2,"0");
+
+    const mes =
+    String(
+        hoje.getMonth()+1
+    ).padStart(2,"0");
+
+    const ano =
+    hoje.getFullYear();
+
+    const sequencia =
+    Number(
+        localStorage.getItem(
+            "sequenciaSorteio"
+        )
+    ) || 1;
+
+    return `PE${dia}${mes}${ano}-${String(sequencia).padStart(5,"0")}`;
+}
+
+/* ==========================
+   ALTERAR SEQUÊNCIA
+========================== */
+
+function definirProximoSorteio(numero){
+
+    localStorage.setItem(
+        "sequenciaSorteio",
+        numero
+    );
+
+    alert(
+        "Próximo sorteio será o nº " +
+        numero
+    );
+}
+
+function alterarSequencia(){
+
+    const campo =
+    document.getElementById(
+        "novoNumero"
+    );
+
+    if(!campo){
+        return;
+    }
+
+    const numero =
+    Number(
+        campo.value
+    );
+
+    if(
+        isNaN(numero) ||
+        numero < 1
+    ){
+
+        alert(
+            "Número inválido"
+        );
+
+        return;
+    }
+
+    definirProximoSorteio(
+        numero
+    );
+}
+
+/* ==========================
+   NOVO SORTEIO
+========================== */
+
+function criarNovoSorteio(){
+
+    const bolas =
+    gerarBolas();
+
+    const sorteio = {
+
+        codigo:
+        gerarCodigo(),
+
+        status:
+        "ABERTO",
+
+        criado:
+        new Date()
+        .toLocaleString(
+            "pt-BR"
+        ),
+
+        bolas:
+        bolas,
+
+        soma:
+        bolas.bola1 +
+        bolas.bola2 +
+        bolas.bola3,
+
+        vencedor:
+        null
+
+    };
+
+    const lista =
+    JSON.parse(
+        localStorage.getItem(
+            CHAVE
+        )
+    ) || [];
+
+    lista.unshift(
+        sorteio
+    );
+
+    localStorage.setItem(
+        CHAVE,
+        JSON.stringify(
+            lista
+        )
+    );
+
+    let sequencia =
+    Number(
+        localStorage.getItem(
+            "sequenciaSorteio"
+        )
+    ) || 1;
+
+    sequencia++;
+
+    localStorage.setItem(
+        "sequenciaSorteio",
+        sequencia
+    );
+
+    atualizarTela();
+}
+
+/* ==========================
+   ENCERRAR
+========================== */
+
+function encerrarSorteio(){
+
+    const lista =
+    JSON.parse(
+        localStorage.getItem(
+            CHAVE
+        )
+    ) || [];
+
+    if(
+        lista.length === 0
+    ){
+        return;
+    }
+
+    lista[0].status =
+    "ENCERRADO";
+
+    lista[0].dataEncerramento =
+    new Date()
+    .toLocaleString(
+        "pt-BR"
+    );
+
+    localStorage.setItem(
+        CHAVE,
+        JSON.stringify(
+            lista
+        )
+    );
+
+    atualizarTela();
+}
+
+/* ==========================
+   SORTEIO ATUAL
+========================== */
+
+function mostrarAtual(){
+
+    const lista =
+    JSON.parse(
+        localStorage.getItem(
+            CHAVE
+        )
+    ) || [];
+
+    if(
+        lista.length === 0
+    ){
+
+        document.getElementById(
+            "sorteioAtual"
+        ).innerHTML =
+        "Nenhum sorteio.";
+
+        return;
+    }
+
+    const s =
+    lista[0];
+
+    document.getElementById(
+        "sorteioAtual"
+    ).innerHTML = `
+
+        <h2>Sorteio Atual</h2>
+
+        <strong>${s.codigo}</strong>
+
+        <br><br>
+
+        Status:
+        ${s.status}
+
+        <div class="bolas">
+
+            <div class="bola">
+            ${s.bolas.bola1}
+            </div>
+
+            <div class="bola">
+            ${s.bolas.bola2}
+            </div>
+
+            <div class="bola">
+            ${s.bolas.bola3}
+            </div>
+
+        </div>
+
+        <br>
+
+        Soma:
+        ${s.soma}
+
+    `;
+}
+
+/* ==========================
+   HISTÓRICO
+========================== */
+
+function mostrarHistorico(){
+
+    const lista =
+    JSON.parse(
+        localStorage.getItem(
+            CHAVE
+        )
+    ) || [];
+
+    let html = "";
+
+    lista.forEach(
+        s => {
+
+            html += `
+
+            <div class="card">
+
+                <strong>
+                ${s.codigo}
+                </strong>
+
+                <br>
+
+                ${s.criado}
+
+                <br>
+
+                Status:
+${s.status}
+
+<br>
+
+Criado:
+${s.criado}
+
+<br>
+
+Encerrado:
+${s.dataEncerramento || "-"}
+
+                <br>
+
+                ${s.bolas.bola1}
+                -
+                ${s.bolas.bola2}
+                -
+                ${s.bolas.bola3}
+
+            </div>
+
+            `;
+        }
+    );
+
+    document.getElementById(
+        "historico"
+    ).innerHTML =
+    html;
+}
+
+/* ==========================
+   EXPORTAR JSON
+========================== */
+
+function exportarJSON(){
+
+    const dados =
+    localStorage.getItem(
+        CHAVE
+    );
+
+    if(!dados){
+
+        alert(
+            "Nenhum sorteio encontrado."
+        );
+
+        return;
+    }
+
+    const blob =
+    new Blob(
+        [dados],
+        {
+            type:
+            "application/json"
+        }
+    );
+
+    const a =
+    document.createElement(
+        "a"
+    );
+
+    a.href =
+    URL.createObjectURL(
+        blob
+    );
+
+    a.download =
+    "sorteios.json";
+
+    a.click();
+}
+
+/* ==========================
+   ATUALIZAR TELA
+========================== */
+
+function atualizarTela(){
+
+    mostrarAtual();
+
+    mostrarHistorico();
+}
+
+/* ==========================
+   INICIALIZAÇÃO
+========================== */
+
+window.onload = function(){
+
+    const lista =
+    JSON.parse(
+        localStorage.getItem(
+            CHAVE
+        )
+    ) || [];
+
+    if(
+        lista.length === 0
+    ){
+
+        criarNovoSorteio();
+
+    }else{
+
+        atualizarTela();
+
+    }
+};
+
+</script>
+
+
+</body>
+</html>
