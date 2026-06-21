@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instalação APP</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <script defer src="script.js"></script>
+</head>
+<body>
+
+    <main>
+        <h2>Bem-vindo ao meu PWA!</h2>
+        <p>Este é um Progressive Web App com layout personalizado.</p>
+        <button id="installButton" hidden>Instalar PWA</button>
+    </main>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(() => console.log('Service Worker registrado!'))
+                .catch(err => console.log('Erro no Service Worker:', err));
+        }
+    </script>
+</body>
+</html>
