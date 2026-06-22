@@ -16,25 +16,3 @@ window.addEventListener("beforeinstallprompt", event => {
         });
     });
 });
-
-
-
-if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js')
-        .then(registration => {
-            console.log('Service Worker registrado!');
-
-            registration.addEventListener('updatefound', () => {
-                const newWorker = registration.installing;
-                newWorker.addEventListener('statechange', () => {
-                    if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                        if (confirm("Nova versão disponível! Deseja atualizar?")) {
-                            window.location.reload();
-                        }
-                    }
-                });
-            });
-        })
-        .catch(err => console.log('Erro no Service Worker:', err));
-}
-
