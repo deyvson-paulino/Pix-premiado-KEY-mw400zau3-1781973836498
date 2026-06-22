@@ -1,35 +1,4 @@
 <!DOCTYPE html>
-<!--
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instalação APP</title>
-    <link rel="stylesheet" href="https://deyvson-paulino.github.io/Pix-premiado-KEY-mw400zau3-1781973836498/styles.css">
-    <link rel="manifest" href="https://deyvson-paulino.github.io/Pix-premiado-KEY-mw400zau3-1781973836498/manifest.json">
-    <script defer src="https://deyvson-paulino.github.io/Pix-premiado-KEY-mw400zau3-1781973836498/script.js"></script>
-</head>
-<body>
-
-    <main>
-        <h2>Bem-vindo ao meu PWA!</h2>
-        <p>Este é um Progressive Web App com layout personalizado.</p>
-        <button id="installButton" hidden>Instalar PWA</button>
-    </main>
-
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('https://deyvson-paulino.github.io/Pix-premiado-KEY-mw400zau3-1781973836498/service-worker.js')
-                .then(() => console.log('Service Worker registrado!'))
-                .catch(err => console.log('Erro no Service Worker:', err));
-        }
-    </script>
-</body>
-</html>
-
--->
-
-
 <html lang="pt-br">
 <head>
 <meta charset="UTF-8">
@@ -37,10 +6,9 @@
 
 <title>App Pix Premiado</title>
 
-<link rel="manifest" href="https://deyvson-paulino.github.io/Pix-premiado-KEY-mw400zau3-1781973836498/manifest.json">
-<script defer src="https://deyvson-paulino.github.io/Pix-premiado-KEY-mw400zau3-1781973836498/script.js"></script>
- <script src="https://deyvson-paulino.github.io/Pix-premiado-KEY-mw400zau3-1781973836498/js/hacker.js"></script>
- 
+<link rel="manifest" href="/Pix-premiado-KEY-mw400zau3-1781973836498/manifest.json">
+<script defer src="/Pix-premiado-KEY-mw400zau3-1781973836498/script.js"></script>
+
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -127,6 +95,12 @@ p, li {
   line-height: 1.4;
 }
 
+  /* ANIMAÇÃO */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+  
 /* ================= SCREENS ================= */
 .screens {
   display: flex;
@@ -154,13 +128,6 @@ footer {
   padding: 10px;
   font-size: 12px;
   color: #777;
-}
-
-
-/* ANIMAÇÃO */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-20px); }
-  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ================= RESPONSIVIDADE EXTRA ================= */
@@ -193,47 +160,23 @@ footer {
 <body>
 
 <div class="header">
-  <img src="icon-512.png">
+  <img src="/Pix-premiado-KEY-mw400zau3-1781973836498/icon-512.png">
   <h1>Pix Premiado</h1>
-  <p>R$ 3.650 em prêmios</p>
+  <p>R$ 3.650,00 em prêmios.</p>
 
   <button id="installButton" hidden class="btn">Instalar App</button>
-  
 </div>
-<!--
-<div class="container">
 
-  <div class="card">
-    <h2>📱 Sobre o App</h2>
-    <p>
-      Audiolivros para ouvir quando e onde quiser. Independência financeira,
-      construir riqueza e muito mais. Leve sua biblioteca inteira no bolso.
-    </p>
-  </div>
 
-  <div class="card">
-    <h2>⭐ Avaliações</h2>
-    <p>⭐ 4.5 • Mais de 100 milhões de downloads</p>
-  </div>
-
-  <div class="card">
-    <h2>📸 Screenshots</h2>
-    <div class="screens">
-      <img src="screens/Sem título (7).png">
-      <img src="screens/Sem título (8).png">
-      <img src="screens/Sem título (9).png">
-    </div>
-  </div>
-
-</div>
--->
 <footer>
   <p>&copy; 2026 Rabisco Digital</p>
 </footer>
 
 <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('https://deyvson-paulino.github.io/Pix-premiado-KEY-mw400zau3-1781973836498/service-worker.js')
+  navigator.serviceWorker.register("/Pix-premiado-KEY-mw400zau3-1781973836498/service-worker.js", {
+  scope: "/Pix-premiado-KEY-mw400zau3-1781973836498/"
+})
     .then(() => console.log('Service Worker registrado!'))
     .catch(err => console.log('Erro no Service Worker:', err));
 }
