@@ -1,20 +1,22 @@
 {
     "name": "Sorteio 100 | Rabisco",
     "short_name": "Pix Premiado",
-    "start_url": "https://deyvson-paulino.github.io/Pix-premiado-KEY-mw400zau3-1781973836498/pix-premiado.html",
+    "start_url": "/Pix-premiado-KEY-mw400zau3-1781973836498/pix-premiado.html",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#007bff",
+      "scope": "/Pix-premiado-KEY-mw400zau3-1781973836498/",
+
     "icons": [
         {
-            "src": "https://deyvson-paulino.github.io/Pix-premiado-KEY-mw400zau3-1781973836498/icon-192.png",
+            "src": "/Pix-premiado-KEY-mw400zau3-1781973836498/icon-192.png",
             "sizes": "192x192",
-            "type": "https://deyvson-paulino.github.io/Pix-premiado-KEY-mw400zau3-1781973836498/image/png"
+            "type": "image/png"
         },
         {
-            "src": "icon-512.png",
+            "src": "/Pix-premiado-KEY-mw400zau3-1781973836498/icon-512.png",
             "sizes": "512x512",
-            "type": "https://deyvson-paulino.github.io/Pix-premiado-KEY-mw400zau3-1781973836498/image/png"
+            "type": "image/png"
         }
     ]
 }
