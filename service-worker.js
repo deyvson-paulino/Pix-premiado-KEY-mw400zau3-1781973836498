@@ -1,9 +1,9 @@
-const CACHE_NAME = "pwa-pix-premiado-24-08-2026_2-cache-v1";
+const CACHE_NAME = "pwa-pix-premiado-24-08-2026_3-cache-v1";
 
 const BASE = "/Pix-premiado-KEY-mw400zau3-1781973836498/";
 const urlsToCache = [
     BASE,
-    //BASE + "index.html",
+    BASE + "index.html",
     BASE + "pix-premiado.html",
     BASE + "login.html",
     BASE + "gerar-bola-da-sorte.html",
