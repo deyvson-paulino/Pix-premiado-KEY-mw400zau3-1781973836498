@@ -1,20 +1,47 @@
-const CACHE_NAME = "pwa-pix-premiado-22-06-2026-cache-v1";
+const CACHE_NAME = "pwa-pix-premiado-24-08-2026-cache-v1";
 
 const BASE = "/Pix-premiado-KEY-mw400zau3-1781973836498/";
 const urlsToCache = [
     BASE,
     BASE + "index.html",
-    BASE + "home.html",
-    BASE + "login.html",
-    BASE + "manifest.json",
-    BASE + "script.js",
-    BASE + "css/style.css",
-    BASE + "js/array.js",
     BASE + "pix-premiado.html",
+    BASE + "login.html",
+    BASE + "gerar-bola-da-sorte.html",
+    BASE + "manifest.json",
+    
+    // css
+    BASE + "script.js",
+    BASE + "js/array.js",
+    BASE + "js/cod-sorteio.js",
+    BASE + "js/hacker.js",
+    BASE + "js/maior-cota.js",
+    
+    // css
+    BASE + "style.css",
+    BASE + "css/style.css",
+    BASE + "css/u-style.css",
     
     // imagens
-    //BASE + "screens/Sem título (7).png",
+    BASE + "image/13256919.jpg",
+    BASE + "image/4034599.png",
+    BASE + "image/Adobe_Express_20250323_0749370_1.png",
+    BASE + "image/jogo-6-6-1130x580.jpg",
     
+    BASE + "image/ouro_1346430_1.png",
+    BASE + "image/qr-code-pix.jpg",
+    BASE + "image/sorteio-100-construcao-plataforma-19-marco_2025-000000000001.jpeg-1024x574.webp",
+    BASE + "image/9.png",
+    BASE + "image/9.png",
+    
+    // imagens/comprar
+    BASE + "image/como_comprar/compra-1.png",
+    BASE + "image/como_comprar/compra-2.png",
+    BASE + "image/como_comprar/compra-3.png",
+    BASE + "image/como_comprar/compra-4.png",
+    BASE + "image/como_comprar/compra-5.png",
+    BASE + "image/como_comprar/compra-6.png",
+    BASE + "image/como_comprar/compra-7.png",
+    BASE + "image/como_comprar/compra-8.png",
     
     // videos
     BASE + "v_login.mp4",
